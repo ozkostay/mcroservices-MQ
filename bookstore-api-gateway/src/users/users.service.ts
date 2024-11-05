@@ -12,9 +12,17 @@ export class UsersService {
   //   return 'This action adds a new user';
   // }
 
-  findAll() {
-    const res$ = this.usersClient.send('users.findAll', { ddd: 'findAll' });
-    return lastValueFrom(res$);
+  async findAll() {
+    // const res$ = this.usersClient.send('users.findAll', { ddd: 'findAll' });
+    // const fromRabbit = await lastValueFrom(res$);
+    // console.log('999', fromRabbit);
+    // return fromRabbit;
+
+    const data = { ddd:'111', sss: '444'}
+    const res$ = this.usersClient.emit('konst_event', data);
+    const toReturn = lastValueFrom(res$);
+    console.log('reS', toReturn);
+    return await toReturn;
     // return `MOCK This action returns all users`;
   }
 
@@ -23,6 +31,8 @@ export class UsersService {
       ddd: 'bridgeToBooks',
     });
     return lastValueFrom(res$);
+    
+
     // return `MOCK This action returns all users`;
   }
 

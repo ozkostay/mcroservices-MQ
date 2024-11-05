@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
 
 @Controller()
 export class AppController {
@@ -17,4 +17,16 @@ export class AppController {
     console.log('bridgeToBooks Pl', pl);
     return this.appService.bridgeToBooks();
   }
+
+  @MessagePattern('konst_event')
+  getNotifications(@Payload() data: any, @Ctx() context: RmqContext) {
+    console.log(`Pattern: ${context.getPattern()}`);
+    console.log('DATA', data);
+    // console.log('getMessage', context.getMessage());
+    // console.log('getChannelRef', context.getChannelRef());
+    return { ccc: '333'}
+  }
+  
+
+
 }
